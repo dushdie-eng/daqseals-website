@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>達全有限公司 DAQ SEALS｜精密機械軸封專業供應與診斷</title>
+<meta name="description" content="達全有限公司（DAQ SEALS）專注機械軸封供應與失效診斷服務，EA560系列機械軸封，服務半導體與精密製程產業。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #10161c;
+    --surface: #171f27;
+    --surface-2: #1d2731;
+    --line: #2b3742;
+    --brass: #c1863f;
+    --brass-bright: #e3a75c;
+    --blueprint: #6fa9b8;
+    --text: #eef2f4;
+    --text-muted: #93a1ac;
+    --text-faint: #5f6f7a;
+    --radius: 2px;
+    --wrap: 1180px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Noto Sans TC', sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk','Noto Sans TC', sans-serif;
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.02em;
+  }
+
+  a{color:inherit; text-decoration:none;}
+
+  img{max-width:100%; display:block;}
+
+  .wrap{
+    max-width:var(--wrap);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--brass-bright);
+    outline-offset:3px;
+  }
+
+  /* ---------- background blueprint grid ---------- */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity:0.18;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 75%);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(10px);
+    background:rgba(16,22,28,0.82);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:var(--wrap); margin:0 auto;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:10px;
+  }
+  .brand-mark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:20px; letter-spacing:0.06em;
+    color:var(--text);
+  }
+  .brand-mark span{color:var(--brass-bright);}
+  .brand-zh{
+    font-size:13px; color:var(--text-muted); letter-spacing:0.08em;
+  }
+  nav.links{display:flex; gap:36px; font-size:14px;}
+  nav.links a{color:var(--text-muted); transition:color .2s;}
+  nav.links a:hover{color:var(--brass-bright);}
+  .nav-cta{
+    font-size:13px; padding:9px 18px;
+    border:1px solid var(--brass); color:var(--brass-bright);
+    border-radius:var(--radius);
+    transition: background .2s, color .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--brass); color:var(--ink);}
+
+  @media (max-width:820px){
+    nav.links{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; z-index:1;
+    padding:100px 0 80px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:60px;
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr; gap:48px;}
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--blueprint);
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:''; width:26px; height:1px; background:var(--blueprint);
+  }
+  .hero h1{
+    font-size:clamp(32px, 4.2vw, 52px);
+    line-height:1.28;
+    color:var(--text);
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal; color:var(--brass-bright);
+  }
+  .hero p.lead{
+    font-size:16px; color:var(--text-muted);
+    max-width:46ch;
+    margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--brass); color:var(--ink);
+    padding:13px 26px; border-radius:var(--radius);
+    font-weight:700; font-size:14px;
+    transition:background .2s, transform .2s;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--brass-bright); transform:translateY(-1px);}
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--text);
+    padding:13px 26px; border-radius:var(--radius);
+    font-size:14px; transition:border-color .2s, color .2s;
+  }
+  .btn-ghost:hover{border-color:var(--blueprint); color:var(--blueprint);}
+
+  .hero-stats{
+    display:flex; gap:36px; margin-top:48px;
+    padding-top:28px; border-top:1px solid var(--line);
+  }
+  .stat-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:22px; color:var(--brass-bright); font-weight:500;
+  }
+  .stat-label{font-size:12px; color:var(--text-faint); margin-top:4px;}
+
+  /* ---------- signature diagram ---------- */
+  .diagram-frame{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:var(--radius);
+    padding:28px 20px 20px;
+  }
+  .diagram-frame::before{
+    content:'FIG. 01 — 機械軸封剖面示意';
+    position:absolute; top:10px; left:20px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px; letter-spacing:0.08em;
+    color:var(--text-faint); text-transform:uppercase;
+  }
+  .diagram-frame svg{width:100%; height:auto;}
+
+  .shaft-rotor{ transform-origin: 50% 50%; animation: spin 9s linear infinite; }
+  @media (prefers-reduced-motion: reduce){ .shaft-rotor{ animation:none; } }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .diagram-caption{
+    display:flex; justify-content:space-between;
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; color:var(--text-faint);
+  }
+
+  /* ---------- section shell ---------- */
+  section{position:relative; z-index:1; padding:88px 0;}
+  section.alt{background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .section-head{
+    max-width:640px; margin-bottom:52px;
+  }
+  .section-head h2{
+    font-size:clamp(24px,3vw,34px);
+    margin-top:14px;
+  }
+  .section-head p{
+    color:var(--text-muted); margin-top:14px; font-size:15px;
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns: 0.9fr 1.1fr; gap:64px; align-items:start;
+  }
+  @media (max-width:900px){ .about-grid{grid-template-columns:1fr; gap:36px;} }
+  .about-copy p{color:var(--text-muted); margin-bottom:18px; font-size:15.5px;}
+  .about-copy strong{color:var(--text); font-weight:700;}
+
+  .credential-list{display:flex; flex-direction:column; gap:0;}
+  .credential{
+    display:grid; grid-template-columns:56px 1fr;
+    gap:18px; padding:22px 0; border-top:1px solid var(--line);
+  }
+  .credential:last-child{border-bottom:1px solid var(--line);}
+  .credential-num{
+    font-family:'IBM Plex Mono', monospace; color:var(--brass-bright); font-size:14px; padding-top:3px;
+  }
+  .credential h3{font-size:16px; margin-bottom:6px; font-weight:700;}
+  .credential p{color:var(--text-muted); font-size:14px;}
+
+  /* ---------- products ---------- */
+  .product-panel{
+    border:1px solid var(--line); background:var(--ink);
+    border-radius:var(--radius);
+    padding:40px;
+    display:grid; grid-template-columns: 1fr 1fr; gap:40px;
+    margin-bottom:24px;
+  }
+  @media (max-width:820px){ .product-panel{grid-template-columns:1fr;} }
+  .product-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--blueprint);
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; display:block;
+  }
+  .product-panel h3{font-size:24px; margin-bottom:14px;}
+  .product-panel p{color:var(--text-muted); font-size:15px; margin-bottom:20px;}
+  .spec-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  .spec-table tr{border-top:1px solid var(--line);}
+  .spec-table tr:last-child{border-bottom:1px solid var(--line);}
+  .spec-table td{padding:11px 0; color:var(--text-muted);}
+  .spec-table td:first-child{color:var(--text-faint); width:38%; font-family:'IBM Plex Mono', monospace; font-size:12px;}
+  .spec-table td:last-child{color:var(--text);}
+
+  .material-chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    border:1px solid var(--line); color:var(--text-muted);
+    font-family:'IBM Plex Mono', monospace; font-size:12px;
+    padding:7px 12px; border-radius:var(--radius);
+  }
+
+  /* ---------- service cards ---------- */
+  .service-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:900px){ .service-grid{grid-template-columns:1fr;} }
+  .service-card{background:var(--ink); padding:34px 30px;}
+  .service-index{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--brass-bright); margin-bottom:20px;}
+  .service-card h3{font-size:18px; margin-bottom:12px;}
+  .service-card p{color:var(--text-muted); font-size:14.5px;}
+
+  /* ---------- contact ---------- */
+  .contact-grid{
+    display:grid; grid-template-columns: 1fr 1fr; gap:64px;
+  }
+  @media (max-width:900px){ .contact-grid{grid-template-columns:1fr; gap:40px;} }
+  .contact-list{display:flex; flex-direction:column; gap:0;}
+  .contact-row{
+    display:grid; grid-template-columns:120px 1fr;
+    gap:16px; padding:20px 0; border-top:1px solid var(--line);
+  }
+  .contact-list .contact-row:last-child{border-bottom:1px solid var(--line);}
+  .contact-label{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.08em; padding-top:2px;
+  }
+  .contact-value{font-size:16px; color:var(--text);}
+  .contact-value a{color:var(--brass-bright); transition:opacity .2s;}
+  .contact-value a:hover{opacity:0.8;}
+
+  .contact-panel{
+    border:1px solid var(--line); background:var(--surface);
+    padding:34px; border-radius:var(--radius);
+  }
+  .contact-panel h3{font-size:18px; margin-bottom:12px;}
+  .contact-panel p{color:var(--text-muted); font-size:14.5px; margin-bottom:24px;}
+
+  /* ---------- footer ---------- */
+  footer{
+    position:relative; z-index:1;
+    border-top:1px solid var(--line);
+    padding:34px 0;
+  }
+  .footer-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-size:12.5px; color:var(--text-faint);
+  }
+  .footer-row .mono{font-size:11.5px;}
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <span class="brand-mark">DAQ <span>SEALS</span></span>
+      <span class="brand-zh">達全有限公司</span>
+    </div>
+    <nav class="links">
+      <a href="#about">關於達全</a>
+      <a href="#products">產品線</a>
+      <a href="#service">技術服務</a>
+      <a href="#contact">聯絡我們</a>
+    </nav>
+    <a class="nav-cta" href="#contact">洽詢報價</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">MECHANICAL SHAFT SEALS · 高雄</div>
+        <h1>讓每一次旋轉，<br>都密封在<em>精準</em>之中。</h1>
+        <p class="lead">達全有限公司專注機械軸封的選型供應與失效診斷，服務半導體周邊供應鏈與精密製程產業，從選型、供貨到故障根因分析，提供一站式技術支援。</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#contact">取得報價</a>
+          <a class="btn-ghost" href="#products">查看 EA560 系列</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">EA560</div>
+            <div class="stat-label">主力軸封系列</div>
+          </div>
+          <div>
+            <div class="stat-num">831</div>
+            <div class="stat-label">高雄大寮 · 在地服務</div>
+          </div>
+          <div>
+            <div class="stat-num">SiC / EPDM</div>
+            <div class="stat-label">耐蝕材質可選配</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-frame">
+        <svg viewBox="0 0 520 460" xmlns="http://www.w3.org/2000/svg">
+          <!-- centerline -->
+          <line x1="20" y1="230" x2="500" y2="230" stroke="#3a4750" stroke-width="1" stroke-dasharray="6 6"/>
+
+          <!-- housing block -->
+          <rect x="150" y="90" width="220" height="280" fill="none" stroke="#2b3742" stroke-width="1.5"/>
+          <line x1="150" y1="90" x2="150" y2="370" stroke="#2b3742" stroke-width="1.5"/>
+
+          <!-- shaft -->
+          <rect x="20" y="205" width="150" height="50" fill="#1d2731" stroke="var(--blueprint)" stroke-width="1.5"/>
+          <rect x="350" y="205" width="150" height="50" fill="#1d2731" stroke="var(--blueprint)" stroke-width="1.5"/>
+
+          <!-- rotating group -->
+          <g class="shaft-rotor">
+            <circle cx="260" cy="230" r="30" fill="none" stroke="var(--brass-bright)" stroke-width="2"/>
+            <circle cx="260" cy="230" r="30" fill="none" stroke="var(--brass-bright)" stroke-width="0.6" stroke-dasharray="2 6"/>
+            <line x1="260" y1="200" x2="260" y2="260" stroke="var(--brass-bright)" stroke-width="1"/>
+            <line x1="230" y1="230" x2="290" y2="230" stroke="var(--brass-bright)" stroke-width="1"/>
+          </g>
+
+          <!-- rotating face -->
+          <rect x="235" y="205" width="14" height="50" fill="#c1863f" opacity="0.85"/>
+          <!-- stationary face -->
+          <rect x="271" y="205" width="14" height="50" fill="#8a97a1" opacity="0.85"/>
+
+          <!-- spring coil (schematic) -->
+          <path d="M195,215 q8,-10 16,0 q8,10 16,0 q8,-10 16,0 q8,10 16,0" fill="none" stroke="var(--blueprint)" stroke-width="1.4"/>
+          <path d="M195,245 q8,-10 16,0 q8,10 16,0 q8,-10 16,0 q8,10 16,0" fill="none" stroke="var(--blueprint)" stroke-width="1.4"/>
+
+          <!-- o-rings -->
+          <circle cx="300" cy="215" r="4" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
+          <circle cx="300" cy="245" r="4" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
+
+          <!-- callouts -->
+          <line x1="242" y1="205" x2="242" y2="130" stroke="#5f6f7a" stroke-width="1"/>
+          <text x="200" y="122" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">旋轉環 ROTATING FACE</text>
+
+          <line x1="278" y1="205" x2="278" y2="160" stroke="#5f6f7a" stroke-width="1"/>
+          <text x="288" y="156" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">靜環 STATIONARY FACE</text>
+
+          <line x1="211" y1="215" x2="150" y2="180" stroke="#5f6f7a" stroke-width="1"/>
+          <text x="60" y="176" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">彈簧 SPRING</text>
+
+          <line x1="300" y1="245" x2="340" y2="300" stroke="#5f6f7a" stroke-width="1"/>
+          <text x="300" y="316" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">O型環 O-RING</text>
+
+          <line x1="95" y1="230" x2="95" y2="400" stroke="#5f6f7a" stroke-width="1"/>
+          <text x="40" y="416" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">軸 SHAFT</text>
+        </svg>
+        <div class="diagram-caption">
+          <span>EA560 SERIES — CROSS SECTION</span>
+          <span>DAQ SEALS ENG.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="section-head" style="margin-bottom:0;">
+        <div class="eyebrow">ABOUT DAQ SEALS</div>
+        <h2>專注軸封，<br>不做多餘的事。</h2>
+        <div class="about-copy" style="margin-top:24px;">
+          <p>達全有限公司是一家專注於<strong>機械軸封（Mechanical Shaft Seals）</strong>的技術供應商，服務對象涵蓋一般化工泵浦應用與<strong>半導體周邊供應鏈</strong>相關製程設備。</p>
+          <p>我們相信軸封雖是機台上不起眼的小零件，卻常是決定產線穩定與否的關鍵。因此達全不只是賣零件，更提供從<strong>選型建議、材質評估到失效根因分析</strong>的完整技術支援。</p>
+        </div>
+      </div>
+
+      <div class="credential-list">
+        <div class="credential">
+          <div class="credential-num">01</div>
+          <div>
+            <h3>選型與供應</h3>
+            <p>依泵浦工況、介質特性與溫壓條件，提供適配的軸封型號與材質建議，並負責後續供貨與交期管理。</p>
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-num">02</div>
+          <div>
+            <h3>失效分析診斷</h3>
+            <p>針對洩漏、異常磨損、乾運轉損傷等現場問題，出具工程等級的失效分析報告，協助客戶找出根因、對症改善，而非僅止於更換零件。</p>
+          </div>
+        </div>
+        <div class="credential">
+          <div class="credential-num">03</div>
+          <div>
+            <h3>材質工程諮詢</h3>
+            <p>依製程介質（如酸鹼廢水、乙二醇系統等）評估密封面與彈性體材質組合，包含 SiC/SiC、Carbon/SiC、EPDM、FKM 等選配。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="products">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">PRODUCT LINE</div>
+        <h2>EA560 系列機械軸封</h2>
+        <p>主力供應系列，適用於一般化工泵浦與精密製程設備的旋轉軸封應用，材質可依現場介質條件客製配置。</p>
+      </div>
+
+      <div class="product-panel">
+        <div>
+          <span class="product-tag">SPEC SHEET</span>
+          <h3>EA560 Series</h3>
+          <p>推式（Pusher Type）機械軸封設計，結構單純、維護容易，適合泵浦廠及設備商作為標準配置或替代品導入。</p>
+          <div class="material-chips">
+            <span class="chip">SiC / SiC</span>
+            <span class="chip">Carbon / SiC</span>
+            <span class="chip">EPDM</span>
+            <span class="chip">FKM</span>
+            <span class="chip">RBSiC</span>
+          </div>
+        </div>
+        <table class="spec-table">
+          <tr><td>TYPE</td><td>推式單彈簧軸封</td></tr>
+          <tr><td>APPLICATION</td><td>一般化工泵浦、腐蝕性介質、精密製程周邊設備</td></tr>
+          <tr><td>SEAL FACES</td><td>SiC/SiC、Carbon/SiC 依工況選配</td></tr>
+          <tr><td>ELASTOMER</td><td>EPDM／FKM 依介質相容性選配</td></tr>
+          <tr><td>SUPPLY</td><td>可依客戶軸徑規格客製供貨</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="service">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">TECHNICAL SERVICE</div>
+        <h2>不只供貨，更懂得診斷</h2>
+        <p>軸封異常往往是製程狀況的訊號。達全提供完整的技術服務流程，協助客戶從根本解決問題。</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-index">01 · 現場評估</div>
+          <h3>問題釐清</h3>
+          <p>了解洩漏、異音、乾運轉等現場異常徵兆，並收集運轉條件與更換週期紀錄。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-index">02 · 拆解分析</div>
+          <h3>失效鑑定</h3>
+          <p>檢視密封面磨潤狀況、O型環硬化情形、應力腐蝕痕跡等，判定實際失效模式。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-index">03 · 改善建議</div>
+          <h3>診斷報告</h3>
+          <p>出具正式失效分析報告，提供材質、設計或操作條件的改善建議，降低重複故障率。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="section-head" style="margin-bottom:32px;">
+          <div class="eyebrow">CONTACT</div>
+          <h2>聊聊您的軸封需求</h2>
+          <p>無論是選型諮詢、報價需求，或是現場軸封異常想找人討論，歡迎與我們聯絡。</p>
+        </div>
+        <div class="contact-list">
+          <div class="contact-row">
+            <div class="contact-label">電話</div>
+            <div class="contact-value"><a href="tel:0777153885">07-7153885</a></div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-label">手機</div>
+            <div class="contact-value"><a href="tel:0927595323">0927-595-323</a></div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:daqseals@gmail.com">daqseals@gmail.com</a></div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-label">地址</div>
+            <div class="contact-value">831 高雄市大寮區民智街16號</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-panel">
+        <h3>洽詢報價 / 技術諮詢</h3>
+        <p>來信請簡述泵浦型號、軸徑尺寸、介質種類與運轉條件，我們會盡快回覆合適的選型建議與報價。</p>
+        <a class="btn-primary" href="mailto:daqseals@gmail.com?subject=軸封選型諮詢" style="display:inline-block;">寄信洽詢</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <div>© 2026 達全有限公司 DAQ SEALS. All rights reserved.</div>
+    <div class="mono">831 高雄市大寮區民智街16號 · 07-7153885</div>
+  </div>
+</footer>
+
+</body>
+</html>
