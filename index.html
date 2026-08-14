@@ -10,18 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink: #10161c;
-    --surface: #171f27;
-    --surface-2: #1d2731;
-    --line: #2b3742;
-    --brass: #c1863f;
-    --brass-bright: #e3a75c;
-    --blueprint: #6fa9b8;
-    --text: #eef2f4;
-    --text-muted: #93a1ac;
-    --text-faint: #5f6f7a;
+    --ink: #f6f7f8;
+    --surface: #ffffff;
+    --surface-2: #eef0f2;
+    --line: #d7dbdf;
+    --brass: #a15b1f;
+    --brass-bright: #c17a2e;
+    --blueprint: #46707c;
+    --text: #1b2126;
+    --text-muted: #57626b;
+    --text-faint: #8a939b;
     --radius: 2px;
     --wrap: 1180px;
+    --metal: linear-gradient(135deg, #fdfdfe 0%, #e7e9eb 22%, #f7f8f9 45%, #dfe2e5 68%, #f4f5f6 85%, #e9ebed 100%);
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -63,6 +64,19 @@
   }
 
   /* ---------- background blueprint grid ---------- */
+  .brushed{
+    background: var(--metal);
+    position:relative;
+  }
+  .brushed::after{
+    content:'';
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(90deg, rgba(20,25,30,0.035) 0px, rgba(20,25,30,0.035) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    border-radius:inherit;
+  }
+  .brushed > *{position:relative; z-index:1;}
+
   .grid-bg{
     position:fixed;
     inset:0;
@@ -80,7 +94,7 @@
   header{
     position:sticky; top:0; z-index:50;
     backdrop-filter: blur(10px);
-    background:rgba(16,22,28,0.82);
+    background:rgba(255,255,255,0.86);
     border-bottom:1px solid var(--line);
   }
   .nav{
@@ -185,7 +199,6 @@
   .diagram-frame{
     position:relative;
     border:1px solid var(--line);
-    background:var(--surface);
     border-radius:var(--radius);
     padding:28px 20px 20px;
   }
@@ -245,7 +258,7 @@
 
   /* ---------- products ---------- */
   .product-panel{
-    border:1px solid var(--line); background:var(--ink);
+    border:1px solid var(--line);
     border-radius:var(--radius);
     padding:40px;
     display:grid; grid-template-columns: 1fr 1fr; gap:40px;
@@ -278,7 +291,7 @@
     background:var(--line); border:1px solid var(--line);
   }
   @media (max-width:900px){ .service-grid{grid-template-columns:1fr;} }
-  .service-card{background:var(--ink); padding:34px 30px;}
+  .service-card{background:var(--surface); padding:34px 30px;}
   .service-index{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--brass-bright); margin-bottom:20px;}
   .service-card h3{font-size:18px; margin-bottom:12px;}
   .service-card p{color:var(--text-muted); font-size:14.5px;}
@@ -303,7 +316,7 @@
   .contact-value a:hover{opacity:0.8;}
 
   .contact-panel{
-    border:1px solid var(--line); background:var(--surface);
+    border:1px solid var(--line);
     padding:34px; border-radius:var(--radius);
   }
   .contact-panel h3{font-size:18px; margin-bottom:12px;}
@@ -369,18 +382,18 @@
         </div>
       </div>
 
-      <div class="diagram-frame">
+      <div class="diagram-frame brushed">
         <svg viewBox="0 0 520 460" xmlns="http://www.w3.org/2000/svg">
           <!-- centerline -->
-          <line x1="20" y1="230" x2="500" y2="230" stroke="#3a4750" stroke-width="1" stroke-dasharray="6 6"/>
+          <line x1="20" y1="230" x2="500" y2="230" stroke="#9aa3aa" stroke-width="1" stroke-dasharray="6 6"/>
 
           <!-- housing block -->
-          <rect x="150" y="90" width="220" height="280" fill="none" stroke="#2b3742" stroke-width="1.5"/>
-          <line x1="150" y1="90" x2="150" y2="370" stroke="#2b3742" stroke-width="1.5"/>
+          <rect x="150" y="90" width="220" height="280" fill="none" stroke="#5c666e" stroke-width="1.5"/>
+          <line x1="150" y1="90" x2="150" y2="370" stroke="#5c666e" stroke-width="1.5"/>
 
           <!-- shaft -->
-          <rect x="20" y="205" width="150" height="50" fill="#1d2731" stroke="var(--blueprint)" stroke-width="1.5"/>
-          <rect x="350" y="205" width="150" height="50" fill="#1d2731" stroke="var(--blueprint)" stroke-width="1.5"/>
+          <rect x="20" y="205" width="150" height="50" fill="#e4e6e8" stroke="var(--blueprint)" stroke-width="1.5"/>
+          <rect x="350" y="205" width="150" height="50" fill="#e4e6e8" stroke="var(--blueprint)" stroke-width="1.5"/>
 
           <!-- rotating group -->
           <g class="shaft-rotor">
@@ -391,9 +404,9 @@
           </g>
 
           <!-- rotating face -->
-          <rect x="235" y="205" width="14" height="50" fill="#c1863f" opacity="0.85"/>
+          <rect x="235" y="205" width="14" height="50" fill="#a15b1f" opacity="0.9"/>
           <!-- stationary face -->
-          <rect x="271" y="205" width="14" height="50" fill="#8a97a1" opacity="0.85"/>
+          <rect x="271" y="205" width="14" height="50" fill="#6b747c" opacity="0.9"/>
 
           <!-- spring coil (schematic) -->
           <path d="M195,215 q8,-10 16,0 q8,10 16,0 q8,-10 16,0 q8,10 16,0" fill="none" stroke="var(--blueprint)" stroke-width="1.4"/>
@@ -404,20 +417,20 @@
           <circle cx="300" cy="245" r="4" fill="none" stroke="var(--text-muted)" stroke-width="1.2"/>
 
           <!-- callouts -->
-          <line x1="242" y1="205" x2="242" y2="130" stroke="#5f6f7a" stroke-width="1"/>
-          <text x="200" y="122" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">旋轉環 ROTATING FACE</text>
+          <line x1="242" y1="205" x2="242" y2="130" stroke="#8a939b" stroke-width="1"/>
+          <text x="200" y="122" fill="#4d565e" font-family="IBM Plex Mono, monospace" font-size="11">旋轉環 ROTATING FACE</text>
 
-          <line x1="278" y1="205" x2="278" y2="160" stroke="#5f6f7a" stroke-width="1"/>
-          <text x="288" y="156" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">靜環 STATIONARY FACE</text>
+          <line x1="278" y1="205" x2="278" y2="160" stroke="#8a939b" stroke-width="1"/>
+          <text x="288" y="156" fill="#4d565e" font-family="IBM Plex Mono, monospace" font-size="11">靜環 STATIONARY FACE</text>
 
-          <line x1="211" y1="215" x2="150" y2="180" stroke="#5f6f7a" stroke-width="1"/>
-          <text x="60" y="176" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">彈簧 SPRING</text>
+          <line x1="211" y1="215" x2="150" y2="180" stroke="#8a939b" stroke-width="1"/>
+          <text x="60" y="176" fill="#4d565e" font-family="IBM Plex Mono, monospace" font-size="11">彈簧 SPRING</text>
 
-          <line x1="300" y1="245" x2="340" y2="300" stroke="#5f6f7a" stroke-width="1"/>
-          <text x="300" y="316" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">O型環 O-RING</text>
+          <line x1="300" y1="245" x2="340" y2="300" stroke="#8a939b" stroke-width="1"/>
+          <text x="300" y="316" fill="#4d565e" font-family="IBM Plex Mono, monospace" font-size="11">O型環 O-RING</text>
 
-          <line x1="95" y1="230" x2="95" y2="400" stroke="#5f6f7a" stroke-width="1"/>
-          <text x="40" y="416" fill="#93a1ac" font-family="IBM Plex Mono, monospace" font-size="11">軸 SHAFT</text>
+          <line x1="95" y1="230" x2="95" y2="400" stroke="#8a939b" stroke-width="1"/>
+          <text x="40" y="416" fill="#4d565e" font-family="IBM Plex Mono, monospace" font-size="11">軸 SHAFT</text>
         </svg>
         <div class="diagram-caption">
           <span>EA560 SERIES — CROSS SECTION</span>
@@ -472,7 +485,7 @@
         <p>主力供應系列，適用於一般化工泵浦與精密製程設備的旋轉軸封應用，材質可依現場介質條件客製配置。</p>
       </div>
 
-      <div class="product-panel">
+      <div class="product-panel brushed">
         <div>
           <span class="product-tag">SPEC SHEET</span>
           <h3>EA560 Series</h3>
@@ -536,7 +549,7 @@
         <div class="contact-list">
           <div class="contact-row">
             <div class="contact-label">電話</div>
-            <div class="contact-value"><a href="tel:0777153885">07-7153885</a></div>
+            <div class="contact-value"><a href="tel:0777150385">07-7150385</a></div>
           </div>
           <div class="contact-row">
             <div class="contact-label">手機</div>
@@ -553,7 +566,7 @@
         </div>
       </div>
 
-      <div class="contact-panel">
+      <div class="contact-panel brushed">
         <h3>洽詢報價 / 技術諮詢</h3>
         <p>來信請簡述泵浦型號、軸徑尺寸、介質種類與運轉條件，我們會盡快回覆合適的選型建議與報價。</p>
         <a class="btn-primary" href="mailto:daqseals@gmail.com?subject=軸封選型諮詢" style="display:inline-block;">寄信洽詢</a>
@@ -565,7 +578,7 @@
 <footer>
   <div class="wrap footer-row">
     <div>© 2026 達全有限公司 DAQ SEALS. All rights reserved.</div>
-    <div class="mono">831 高雄市大寮區民智街16號 · 07-7153885</div>
+    <div class="mono">831 高雄市大寮區民智街16號 · 07-7150385</div>
   </div>
 </footer>
 
